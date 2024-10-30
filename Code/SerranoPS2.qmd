@@ -1,0 +1,156 @@
+---
+title: "Serrano-PS2"
+format: html
+editor: visual
+---
+
+3: setup
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+```
+3: Importing data
+
+```{r}
+Halloween <- read.csv(here("Data", "Halloween_data_PS2.csv"))
+
+```
+
+4: Inspecting the data
+```{r}
+glimpse(Halloween)
+summary(Halloween)
+```
+5: Assigning data types
+
+```{r}
+Halloween$Costume_type <- as.factor(Halloween$Costume_type)
+Halloween$sugar_high <- as.factor(Halloween$sugar_high)
+```
+
+6: Fixing mistakes
+
+```{r}
+levels(Halloween$Costume_type)
+fix <- which(Halloween$Costume_type %in% c("not scary", "Not scary", "notscary"))
+Halloween$Costume_type[fix] <- "not scary"
+Halloween$Costume_type <- factor(Halloween$Costume_type)
+```
+
+```{r}
+fix2 <- which(Halloween$Costume_type %in% c("scary", "Scary", "scary ", "scaly"))
+Halloween$Costume_type[fix2] <- "scary"
+Halloween$Costume_type <- factor(Halloween$Costume_type)
+```
+
+```{r}
+levels(Halloween$sugar_high)
+fix3 <- which(Halloween$sugar_high %in% c("no", "No", "NO"))
+Halloween$sugar_high[fix3] <- "no"
+Halloween$sugar_high <- factor(Halloween$sugar_high)
+```
+
+```{r}
+levels(Halloween$sugar_high)
+fix4 <- which(Halloween$sugar_high %in% c("yes", "Yes"))
+Halloween$sugar_high[fix4] <- "yes"
+Halloween$sugar_high <- factor(Halloween$sugar_high)
+```
+
+7: Making a scattorplot
+
+```{r}
+ggplot(Halloween, aes(x=age, y=min_temp_trick_treat_C, color=Costume_type, shape=Costume_type))+
+  geom_point(size=5)+
+xlab("Age of trick-or-treaters (years)") + ylab("Minimum Temperature while out (C)")+ theme_bw()
+```
+
+8: Making a Histogram
+
+```{r}
+Histogram_data <- Halloween |>
+  filter(age >= 10) |>
+  filter(g_candy_consumed >= 100)
+
+ggplot(Histogram_data, aes(candy_pieces))+
+  geom_histogram()
+```
+
+9: Summary statistics. 
+
+```{r}
+Halloween |> select(sugar_high, age, g_candy_consumed) |> group_by(sugar_high) |>
+  summarise(mean_age = mean(age),
+            sd_age = sd(age)) |>
+  View()
+```
+
+10: Making a box plot
+
+```{r}
+  ggplot(Halloween, aes(x=Costume_type, y=g_candy_consumed))+
+  geom_boxplot()+
+  geom_point(size = 2, color='orange')+
+  facet_wrap(~sugar_high)+
+  xlab("Costume type")+
+  ylab("Amount of candy consumed (g)")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
