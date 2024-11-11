@@ -1,0 +1,46 @@
+---
+title: "ps2-feedback"
+format: html
+editor: visual
+---
+
+## PS2 feedback
+I'd like to see you do more to provide commentary on your .qmd files, especially for the output of code chunks once you execute them. For example, when you ran `glimpse()` and `summary()` what did you learn about your data?
+
+On line 36 you observe that there are 3 different versions of scary etc but you don't have code showing how you saw these levels for the factor. YOu may have just looked through the data, which is ok for 49 rows but not for 4999, so you should have code that documents the levels for your factor variables.
+
+Similarly, at line 42 after you fix levels of a factor, you should run `levels()` to show that it worked as the next line.
+
+Same for sugar high.
+
+You didn't do any error checking for your numeric variables.
+
+Work on using spacing to make your code more readable. For example, here is your code for figure 1:
+
+```{r}
+ggplot(Halloween, aes(x=age, y=min_temp_trick_treat_C, color=Costume_type, shape=Costume_type))+
+  geom_point(size=5)+
+xlab("Age of trick-or-treaters (years)") + ylab("Minimum Temperature while out (C)")+ theme_bw()
+```
+
+And here is the exact same code, more easily read
+
+```{r}
+ggplot(Halloween, 
+       aes(x=age, y=min_temp_trick_treat_C, color=Costume_type,
+           shape=Costume_type))+
+  geom_point(size=5)+
+  xlab("Age of trick-or-treaters (years)") + 
+  ylab("Minimum Temperature while out (C)")+ 
+  theme_bw()
+```
+
+Line 77 and 78 can be combined:
+
+```{r}
+Histogram_data <- Halloween |>
+  filter(age >= 10 & g_candy_consumed >= 100)
+```
+which is more efficient
+
+Generally good though.

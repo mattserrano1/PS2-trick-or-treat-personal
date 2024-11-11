@@ -11,6 +11,7 @@ rm(list=ls())
 library(tidyverse)
 library(here)
 ```
+
 3: Importing data
 
 ```{r}
@@ -19,23 +20,20 @@ Halloween <- read.csv(here("Data", "Halloween_data_PS2.csv"))
 ```
 
 4: Inspecting the data
+
 ```{r}
 glimpse(Halloween)
 summary(Halloween)
 ```
-5: Assigning data types
-costume type will be used to split data into different categories and needs to have levels so assigning it to be factor data.
-sugar high also needs to be factor data for the same reason.
+
+5: Assigning data types costume type will be used to split data into different categories and needs to have levels so assigning it to be factor data. sugar high also needs to be factor data for the same reason.
 
 ```{r}
 Halloween$Costume_type <- as.factor(Halloween$Costume_type)
 Halloween$sugar_high <- as.factor(Halloween$sugar_high)
 ```
 
-6: Fixing mistakes
-Under costume_type there are different versions of scary, not scary etc so changing them all to a lower case format.
-Making all sugar_high lowercase. 
-This is done so that data can be analysed without the data being split up from there being different formatting throughout the rows. 
+6: Fixing mistakes Under costume_type there are different versions of scary, not scary etc so changing them all to a lower case format. Making all sugar_high lowercase. This is done so that data can be analysed without the data being split up from there being different formatting throughout the rows.
 
 ```{r}
 levels(Halloween$Costume_type)
@@ -64,8 +62,7 @@ Halloween$sugar_high[fix4] <- "yes"
 Halloween$sugar_high <- factor(Halloween$sugar_high)
 ```
 
-7: Making a scatterplot
-messed around with different sizes to get the right size for the points. did the color and shape by costume type so that each costume type would have a different color and shape. 
+7: Making a scatterplot messed around with different sizes to get the right size for the points. did the color and shape by costume type so that each costume type would have a different color and shape.
 
 ```{r}
 ggplot(Halloween, aes(x=age, y=min_temp_trick_treat_C, color=Costume_type, shape=Costume_type))+
@@ -73,8 +70,7 @@ ggplot(Halloween, aes(x=age, y=min_temp_trick_treat_C, color=Costume_type, shape
 xlab("Age of trick-or-treaters (years)") + ylab("Minimum Temperature while out (C)")+ theme_bw()
 ```
 
-8: Making a Histogram
-first i filtered the data I would use to make the histogram into its own data frame. Then I used that data frame to make the histogram only including the desired data. 
+8: Making a Histogram first i filtered the data I would use to make the histogram into its own data frame. Then I used that data frame to make the histogram only including the desired data.
 
 ```{r}
 Histogram_data <- Halloween |>
@@ -85,9 +81,7 @@ ggplot(Histogram_data, aes(candy_pieces))+
   geom_histogram()
 ```
 
-9: Summary statistics. 
-selected out the needed columns for the summary statistics
-then assigned new columns in the summaries functions the desired stats and opened them using the View() function
+9: Summary statistics. selected out the needed columns for the summary statistics then assigned new columns in the summaries functions the desired stats and opened them using the View() function
 
 ```{r}
 Halloween |> select(sugar_high, age, g_candy_consumed) |> group_by(sugar_high) |>
@@ -96,8 +90,8 @@ Halloween |> select(sugar_high, age, g_candy_consumed) |> group_by(sugar_high) |
   View()
 ```
 
-10: Making a box plot
-Facet wrapped by sugar_high to split the box plot into two plots based on if the kid experienced a sugar high or not. Did not include an alpha because I didn't want to outwardly display the outliers.  
+10: Making a box plot Facet wrapped by sugar_high to split the box plot into two plots based on if the kid experienced a sugar high or not. Did not include an alpha because I didn't want to outwardly display the outliers.
+
 ```{r}
   ggplot(Halloween, aes(x=Costume_type, y=g_candy_consumed))+
   geom_boxplot()+
@@ -107,59 +101,3 @@ Facet wrapped by sugar_high to split the box plot into two plots based on if the
   ylab("Amount of candy consumed (g)")
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
